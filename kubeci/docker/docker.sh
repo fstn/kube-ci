@@ -11,7 +11,6 @@ set -e
 #############################################################################################
 initFiles()
 {
-set -x
     echo "[START] Init files inside -> $1"
     for f in `find $1 -regex '.*/Dockerfile'| sort -n `; do
         export folder=$(dirname -- $f)
@@ -36,7 +35,6 @@ set -x
         fi
     done
     echo "[COMPLETED] Init files -> $1"
-set +x
 }
 
 initFiles $(pwd)
