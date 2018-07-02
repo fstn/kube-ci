@@ -23,7 +23,6 @@ GitUtils.extractBuildAndDeployIfChangesInFolder(){
 #############################################################################################
 GitUtils.changeDetected()
 {
-set -x
     currentFolder="$1"
     if [ -z ${currentFolder} ]
     then
@@ -38,7 +37,6 @@ set -x
     else
         echo 0
     fi
-    set +x
 }
 
 #############################################################################################
