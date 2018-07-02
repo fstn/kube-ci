@@ -7,7 +7,7 @@ ci bridge between kubernetes and Gitlab
 wget 
 tar -xf kube-ci.tar 
 YOUR_INSTALLATION_PATH=/Applications/
-mv kube-ci.tar $YOUR_INSTALLATION_PATH/
+mv kube-ci $YOUR_INSTALLATION_PATH/
 chmod +x $YOUR_INSTALLATION_PATH/kubeci
 export KUBECI_PATH=$YOUR_INSTALLATION_PATH
 ```
