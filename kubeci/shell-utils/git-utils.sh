@@ -30,7 +30,7 @@ GitUtils.changeDetected()
     fi
     set -x
     buildAndDeployIfChangesInFolder=$(GitUtils.extractBuildAndDeployIfChangesInFolder ${currentFolder}'/.gitlab-ci.config.yml')
-    gitDiff=$(git diff HEAD~ --name-only ${buildAndDeployIfChangesInFolder})
+    gitDiff=$(git diff HEAD~ --name-only ${currentFolder})
     change=$(echo ${gitDiff} | grep "$buildAndDeployIfChangesInFolder" | wc -l)
     set +x
     if [ ${change} -ge 1 ]
