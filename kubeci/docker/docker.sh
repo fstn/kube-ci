@@ -28,7 +28,7 @@ initFiles()
             DockerUtils.pushDocker ${imageName} ${BUILD_INCREMENT}
             DockerUtils.deployDocker ${imageName} ${BUILD_INCREMENT} ${deploymentName} ${podName}
         }
-        GitUtils.doIfChangesDetected $f action
+        GitUtils.doIfChangesDetected ${f} action
 
         else
             ScreenUtils.echoError "Unable to find file $deploymentFile"

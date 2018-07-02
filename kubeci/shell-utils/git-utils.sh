@@ -29,8 +29,10 @@ GitUtils.changeDetected()
         ScreenUtils.echoError "currentFolder parameter can't be null"
     fi
     buildAndDeployIfChangesInFolder=$(GitUtils.extractBuildAndDeployIfChangesInFolder ${currentFolder}'/.gitlab-ci.config.yml')
-    gitDiff=$(git diff HEAD~ --name-only ${currentFolder})
+    gitDiff=$(git diff HEAD~ --name-only ${buildAndDeployIfChangesInFolder})
+    set -x
     change=$(echo ${gitDiff} | grep "$buildAndDeployIfChangesInFolder" | wc -l)
+    set +x
     if [ ${change} -ge 1 ]
     then
         echo 1
@@ -66,7 +68,7 @@ GitUtils.doIfChangesDetected()
     changeDetected=$(GitUtils.changeDetected ${currentFolder})
     if [ "$changeDetected" = 1 ]
     then
-        $action
+        ${action}
     else
         echo "[IGNORING] $currentFolder already up to date "${changeDetected}
     fi
