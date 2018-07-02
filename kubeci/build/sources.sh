@@ -18,11 +18,17 @@ build()
         action(){
             cd $(dirname ${f})
             # Run all build script define in yaml file
+            done=0
             cat ${f} | shyaml get-values-0 "build-sources.script" 2>/dev/null |
               while IFS='' read -r -d '' value; do
                     echo "[PROGRESS] $value"
                     ${value}
+                    done=1
               done
+            if [ ${done} -eq 0 ]
+            then
+            echo "[IGNORING] build file ->  ${f}"
+            fi
         }
         GitUtils.doIfChangesDetected ${f} action
     done
