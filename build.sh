@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-tar -cf kubeci.tar .
+tar -cf kubeci.tar kubeci
