@@ -23,15 +23,17 @@ GitUtils.extractBuildAndDeployIfChangesInFolder(){
 #############################################################################################
 GitUtils.changeDetected()
 {
+set -x
     currentFolder="$1"
-    buildAndDeployIfChangesInFolder=$(GitUtils.extractBuildAndDeployIfChangesInFolder $currentFolder'/.gitlab-ci.config.yml')
+    buildAndDeployIfChangesInFolder=$(GitUtils.extractBuildAndDeployIfChangesInFolder ${currentFolder}'/.gitlab-ci.config.yml')
     change=$(git diff HEAD~ --name-only | grep "$buildAndDeployIfChangesInFolder" | wc -l)
-    if [ $change -ge 1 ]
+    if [ ${change} -ge 1 ]
     then
         echo 1
     else
         echo 0
     fi
+    set +x
 }
 
 #############################################################################################
@@ -42,28 +44,28 @@ GitUtils.doIfChangesDetected()
     f="$1"
     action="$2"
 
-    if [ -z $f ]
+    if [ -z ${f} ]
     then
         ScreenUtils.echoError "f parameter can't be null"
     fi
-    if [ -z $action ]
+    if [ -z ${action} ]
     then
         ScreenUtils.echoError "action parameter can't be null"
     fi
 
-    if [ -d $f ]
+    if [ -d ${f} ]
     then
-        currentFolder=$f
+        currentFolder=${f}
     else
-        currentFolder=$(dirname $f)
+        currentFolder=$(dirname ${f})
     fi
 
-    changeDetected=$(GitUtils.changeDetected $currentFolder)
+    changeDetected=$(GitUtils.changeDetected ${currentFolder})
     if [ "$changeDetected" = 1 ]
     then
         $action
     else
-        echo "[NOTHING TO DO] $currentFolder already up to date "$changeDetected
+        echo "[IGNORING] $currentFolder already up to date "${changeDetected}
     fi
 }
 
