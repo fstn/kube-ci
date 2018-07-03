@@ -23,22 +23,22 @@ GitUtils.extractBuildAndDeployIfChangesInFolder(){
 #############################################################################################
 GitUtils.changeDetected()
 {
+    set -x
     currentFolder="$1"
     if [ -z ${currentFolder} ]
     then
         ScreenUtils.echoError "currentFolder parameter can't be null"
     fi
-    set -x
     buildAndDeployIfChangesInFolder=$(GitUtils.extractBuildAndDeployIfChangesInFolder ${currentFolder}'/.gitlab-ci.config.yml')
     gitDiff=$(git diff HEAD~ --name-only ${currentFolder})
     change=$(echo ${gitDiff} | grep "$buildAndDeployIfChangesInFolder" | wc -l)
-    set +x
     if [ ${change} -ge 1 ]
     then
         echo 1
     else
         echo 0
     fi
+    set +x
 }
 
 #############################################################################################
