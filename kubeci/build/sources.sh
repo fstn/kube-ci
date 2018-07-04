@@ -10,7 +10,6 @@ set -e
 #############################################################################################
 build()
 {
-set -x
     ScreenUtils.echoBanner "BUILD"
     echo "[START] build files inside -> $1"
     for f in `find $1 -regex ".*/.gitlab-ci.config.yml"| sort -n `; do
@@ -34,7 +33,6 @@ set -x
         GitUtils.doIfChangesDetected ${f} action
     done
     echo "[COMPLETED] build files -> $1"
-    set +x
 }
 
 build  $(pwd)
