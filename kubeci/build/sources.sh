@@ -13,7 +13,7 @@ build()
     ScreenUtils.echoBanner "BUILD"
     echo "[START] build files inside -> $1"
     for f in `find $1 -regex ".*/.gitlab-ci.config.yml"| sort -n `; do
-        echo "[APPLY] file -> $f"
+        echo "[BUILD] SOURCE file -> $f"
         export f=${f}
         cd $(dirname ${f})
         action(){

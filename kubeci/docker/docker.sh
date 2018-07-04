@@ -11,10 +11,12 @@ set -e
 #############################################################################################
 initFiles()
 {
+    ScreenUtils.echoBanner "BUILD DOCKER"
     echo "[START] Init files inside -> $1"
     for f in `find $1 -regex '.*/Dockerfile'| sort -n `; do
         export folder=$(dirname -- $f)
         export dockerWorkingFolder=$(python -c "import os.path; print os.path.relpath(\"$folder\",\"$SOURCE_FOLDER\")")
+        ScreenUtils.echoImportant "[BUILD] Docker in: ${folder}"
         ScreenUtils.echoBanner ${dockerWorkingFolder}
         export deploymentFile=$(GitUtils.getDeploymentFile ${folder})
         if [ -f ${deploymentFile} ]
