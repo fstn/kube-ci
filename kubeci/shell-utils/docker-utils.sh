@@ -32,7 +32,7 @@ DockerUtils.buildDocker()
     echo "[BUILD] Docker version-> $buildCounter"
 
     docker build -t ${imageName}:${buildCounter} -f ${SOURCE_FOLDER}/${folder}/Dockerfile --build-arg folder=${folder} ${SOURCE_FOLDER}
-    docker build tag ${imageName}:${buildCounter} ${imageName}:latest
+    docker tag ${imageName}:${buildCounter} ${imageName}:latest
 }
 #############################################################################################
 ##                                  PUSH DOCKER
