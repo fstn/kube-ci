@@ -19,7 +19,7 @@ set -x
         echo "[APPLY] file -> $f"
         export f=${f}
         action(){
-            HelmUtils.installOrUpdateHelmRelease $(HelmUtils.extractReleaseName ${f}) $(HelmUtils.extractChartName ${f}) ${f} $(HelmUtils.extractNamespace ${f}) ${BUILD_INCREMENT}
+            HelmUtils.installOrUpdateHelmRelease $(HelmUtils.extractReleaseName ${f}) $(HelmUtils.extractChartName ${f}) ${f} $(HelmUtils.extractNamespace ${f})
         }
         GitUtils.doIfChangesDetected ${f} action
     done

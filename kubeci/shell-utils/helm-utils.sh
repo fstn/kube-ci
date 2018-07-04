@@ -12,12 +12,7 @@ HelmUtils.updateHelmRelease()
     releaseName=$1
     chartPath=$2
     namespace=$3
-    imageLastVersion=$5
-    if [ -z ${imageLastVersion} ]
-    then
-        ScreenUtils.echoError "imageLastVersion parameter can't be null"
-    fi
-    helm --tiller-namespace ${namespace} upgrade ${releaseName} ${chartPath} --set=LAST_VERSION=${imageLastVersion}
+    helm --tiller-namespace ${namespace} upgrade ${releaseName} ${chartPath} --set=LAST_VERSION=${BUILD_INCREMENT}
     if [ $? -eq 0 ]; then
         echo "$releaseName updated"
     else
@@ -51,18 +46,13 @@ HelmUtils.installOrUpdateHelmRelease()
     chartPath=$2
     values=$3
     namespace=$4
-    imageLastVersion=$5
-    if [ -z ${imageLastVersion} ]
-    then
-        ScreenUtils.echoError "imageLastVersion parameter can't be null"
-    fi
     if [ -z ${namespace} ]
     then
         namespace="gitlab-managed-apps"
     fi
     helmResult=$(helm --tiller-namespace ${namespace} get ${releaseName} 2>/dev/null |wc -l)
     if [ ${helmResult} -gt 0 ]; then
-        HelmUtils.updateHelmRelease ${releaseName} ${chartPath} ${namespace} ${imageLastVersion}
+        HelmUtils.updateHelmRelease ${releaseName} ${chartPath} ${namespace} ${BUILD_INCREMENT}
     else
         HelmUtils.installHelmRelease ${releaseName} ${chartPath} ${values} ${namespace}
     fi

@@ -5,7 +5,7 @@ d=0;
 bs=0;
 bd=0;
 all=0
-ScreenUtils.echoImportant "Version 0.103"
+ScreenUtils.echoImportant "Version 0.104"
 set -x
 for i in "$@"
 do
