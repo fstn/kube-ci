@@ -19,7 +19,7 @@ build()
         action(){
             # Run all build script define in yaml file
             done=0
-            cat ${f} | shyaml get-values-0 "build-sources.script" 2>/dev/null |
+            cat ${f} | shyaml get-values-0 "build-sources. script" 2>/dev/null |
               while IFS='' read -r -d '' value; do
                     ScreenUtils.echoImportant "[PROGRESS] $value"
                     ${value}
