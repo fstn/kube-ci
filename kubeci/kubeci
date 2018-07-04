@@ -5,7 +5,7 @@ d=0;
 bs=0;
 bd=0;
 all=0
-ScreenUtils.echoImportant "Version 0.1"
+ScreenUtils.echoImportant "Version 0.101"
 for i in "$@"
 do
 case $i in

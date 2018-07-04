@@ -1,8 +1,8 @@
 #!/bin/sh
 
-. $KUBECI_PATH/shell-utils/screen-utils.sh
-. $KUBECI_PATH/shell-utils/config-utils.sh
-. $KUBECI_PATH/shell-utils/kubernetes-utils.sh
+. ${KUBECI_PATH}/shell-utils/screen-utils.sh
+. ${KUBECI_PATH}/shell-utils/config-utils.sh
+. ${KUBECI_PATH}/shell-utils/kubernetes-utils.sh
 
 #############################################################################################
 ##                                   UPDATE HELM RELEASE
@@ -12,7 +12,12 @@ HelmUtils.updateHelmRelease()
     releaseName=$1
     chartPath=$2
     namespace=$3
-    helm --tiller-namespace $namespace upgrade $releaseName $chartPath
+    imageLastVersion=$5
+    if [ -z ${imageLastVersion} ]
+    then
+        ScreenUtils.echoError "imageLastVersion parameter can't be null"
+    fi
+    helm --tiller-namespace ${namespace} upgrade ${releaseName} ${chartPath} --set=LAST_VERSION=${imageLastVersion}
     if [ $? -eq 0 ]; then
         echo "$releaseName updated"
     else
@@ -29,7 +34,7 @@ HelmUtils.installHelmRelease()
     chartPath=$2
     values=$3
     namespace=$4
-    helm install $chartPath --tiller-namespace $namespace --set fullnameOverride=$releaseName,PROJECT_ID=$PROJECT_ID,LAST_VERSION='latest'    --name $releaseName
+    helm install ${chartPath} --tiller-namespace ${namespace} --set fullnameOverride=${releaseName},PROJECT_ID=${PROJECT_ID},LAST_VERSION='latest'    --name ${releaseName}
     if [ $? -eq 0 ]; then
         echo "$releaseName installed"
     else
@@ -46,15 +51,20 @@ HelmUtils.installOrUpdateHelmRelease()
     chartPath=$2
     values=$3
     namespace=$4
-    if [ -z $namespace ]
+    imageLastVersion=$5
+    if [ -z ${imageLastVersion} ]
+    then
+        ScreenUtils.echoError "imageLastVersion parameter can't be null"
+    fi
+    if [ -z ${namespace} ]
     then
         namespace="gitlab-managed-apps"
     fi
-    helmResult=$(helm --tiller-namespace $namespace get $releaseName 2>/dev/null |wc -l)
-    if [ $helmResult -gt 0 ]; then
-        HelmUtils.updateHelmRelease $releaseName $chartPath $namespace
+    helmResult=$(helm --tiller-namespace ${namespace} get ${releaseName} 2>/dev/null |wc -l)
+    if [ ${helmResult} -gt 0 ]; then
+        HelmUtils.updateHelmRelease ${releaseName} ${chartPath} ${namespace} ${imageLastVersion}
     else
-        HelmUtils.installHelmRelease $releaseName $chartPath $values $namespace
+        HelmUtils.installHelmRelease ${releaseName} ${chartPath} ${values} ${namespace}
     fi
 }
 
@@ -64,20 +74,20 @@ HelmUtils.installOrUpdateHelmRelease()
 HelmUtils.extractReleaseName()
 {
     deploymentFile=$1
-    if [ -z $deploymentFile ]
+    if [ -z ${deploymentFile} ]
     then
         ScreenUtils.echoError "deploymentFile parameter can't be null"
     fi
 
-    FileUtils.verifyFile $deploymentFile
+    FileUtils.verifyFile ${deploymentFile}
     releaseName=$(cat "$deploymentFile" | shyaml get-value helm.releaseName |  cut -d':' -f 1)
-    if [ -z  $releaseName  ]
+    if [ -z  ${releaseName}  ]
     then
         ScreenUtils.echoError "Unable to get release name for deployment file $deploymentFile"
         continue;
     fi
 
-    echo $releaseName
+    echo ${releaseName}
 }
 
 #############################################################################################
@@ -86,20 +96,20 @@ HelmUtils.extractReleaseName()
 HelmUtils.extractChartName()
 {
     deploymentFile=$1
-    if [ -z $deploymentFile ]
+    if [ -z ${deploymentFile} ]
     then
         ScreenUtils.echoError "deploymentFile parameter can't be null"
     fi
 
-    FileUtils.verifyFile $deploymentFile
+    FileUtils.verifyFile ${deploymentFile}
     chartName=$(cat "$deploymentFile" | shyaml get-value helm.chart |  cut -d':' -f 1)
-    if [ -z  $chartName  ]
+    if [ -z  ${chartName}  ]
     then
         ScreenUtils.echoError "Unable to get chart name for deployment file $deploymentFile"
         continue;
     fi
 
-    echo $chartName
+    echo ${chartName}
 }
 
 #############################################################################################
@@ -108,18 +118,18 @@ HelmUtils.extractChartName()
 HelmUtils.extractNamespace()
 {
     deploymentFile=$1
-    if [ -z $deploymentFile ]
+    if [ -z ${deploymentFile} ]
     then
         ScreenUtils.echoError "deploymentFile parameter can't be null"
     fi
 
-    FileUtils.verifyFile $deploymentFile
+    FileUtils.verifyFile ${deploymentFile}
     namespace=$(cat "$deploymentFile" | shyaml get-value helm.namespace |  cut -d':' -f 1)
-    if [ -z  $namespace  ]
+    if [ -z  ${namespace}  ]
     then
         ScreenUtils.echoError "Unable to get namespace for deployment file $namespace"
         continue;
     fi
 
-    echo $namespace
+    echo ${namespace}
 }
