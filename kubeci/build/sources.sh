@@ -15,7 +15,7 @@ build()
     for f in `find $1 -regex ".*/.gitlab-ci.config.yml"| sort -n `; do
         echo "[BUILD] SOURCE file -> $f"
         export f=${f}
-        cd $(dirname ${f})
+#        cd $(dirname ${f})
         action(){
             # Run all build script define in yaml file
             done=0
