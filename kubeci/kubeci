@@ -57,18 +57,19 @@ verifySourceParameter(){
 export global_projectsToBuild=""
 . ${KUBECI_PATH}/init/init.sh $all
 
-if [ ${bd} -eq 1 ]
-then
-    verifySourceParameter
-    echo "BUILD DOCKER"
-    . ${KUBECI_PATH}/docker/docker.sh
-fi
 
 if [ ${bs} -eq 1 ]
 then
    verifySourceParameter
    echo "BUILD SOURCE"
    . ${KUBECI_PATH}/build/sources.sh
+fi
+
+if [ ${bd} -eq 1 ]
+then
+    verifySourceParameter
+    echo "BUILD DOCKER"
+    . ${KUBECI_PATH}/docker/docker.sh
 fi
 
 if [ ${d} -eq 1 ]
