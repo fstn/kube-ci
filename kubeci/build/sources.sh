@@ -10,9 +10,6 @@ set -e
 #############################################################################################
 build()
 {
-    ScreenUtils.echoBanner "INITIALIZE"
-    gitDiff=$(GitUtils.getChanges $1)
-    echo "[INIT] Current changes are -> $gitDiff"
     ScreenUtils.echoBanner "BUILD"
     echo "[START] build files inside -> $1"
     for f in `find $1 -regex ".*/.gitlab-ci.config.yml"| sort -n `; do
@@ -24,13 +21,13 @@ build()
             done=0
             cat ${f} | shyaml get-values-0 "build-sources.script" 2>/dev/null |
               while IFS='' read -r -d '' value; do
-                    echo "[PROGRESS] $value"
+                    ScreenUtils.echoImportant "[PROGRESS] $value"
                     ${value}
                     done=1
               done
             if [ ${done} -eq 0 ]
             then
-            echo "[IGNORING] build file ->  ${f}"
+             ScreenUtils.echoWarning "[IGNORING] build file ->  ${f}"
             fi
         }
         GitUtils.doIfChangesDetected ${f} action

@@ -4,9 +4,11 @@ help=0;
 d=0;
 bs=0;
 bd=0;
+all=0
 for i in "$@"
 do
 case $i in
+
     -s=*|--sourceFolder=*)
         export SOURCE_FOLDER="${i#*=}"
         echo "SOURCE_FOLDER $SOURCE_FOLDER"
@@ -31,6 +33,9 @@ case $i in
 EOM
     echo "${help}"
     ;;
+    -a|--all)
+        all=1
+    ;;
     -bs|--buildSource)
         bs=1
     ;;
@@ -49,26 +54,28 @@ verifySourceParameter(){
         ScreenUtils.echoError "SOURCE_FOLDER parameter is missing"
     fi
 }
+export global_projectsToBuild=""
+. ${KUBECI_PATH}/init/init.sh $all
 
 if [ ${bd} -eq 1 ]
 then
     verifySourceParameter
     echo "BUILD DOCKER"
-    bash ${KUBECI_PATH}/docker/docker.sh
+    . ${KUBECI_PATH}/docker/docker.sh
 fi
 
 if [ ${bs} -eq 1 ]
 then
    verifySourceParameter
    echo "BUILD SOURCE"
-   bash ${KUBECI_PATH}/build/sources.sh
+   . ${KUBECI_PATH}/build/sources.sh
 fi
 
 if [ ${d} -eq 1 ]
 then
     verifySourceParameter
     echo "DEPLOY"
-    bash ${KUBECI_PATH}/helm/helm-apply.sh
-    bash ${KUBECI_PATH}/kubernetes/kubectl-apply.sh
+    . ${KUBECI_PATH}/helm/helm-apply.sh
+    . ${KUBECI_PATH}/kubernetes/kubectl-apply.sh
 fi
 

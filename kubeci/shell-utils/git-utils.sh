@@ -37,18 +37,15 @@ GitUtils.getChanges()
 #############################################################################################
 GitUtils.changeDetected()
 {
-    set -x
+
     currentFolder="$1"
     if [ -z ${currentFolder} ]
     then
         ScreenUtils.echoError "currentFolder parameter can't be null"
     fi
-    buildAndDeployIfChangesInFolder=$(GitUtils.extractBuildAndDeployIfChangesInFolder ${currentFolder}'/.gitlab-ci.config.yml')
-    gitDiff=GitUtils.getChanges ${currentFolder}
-    change=$(echo ${gitDiff} | grep "$buildAndDeployIfChangesInFolder" | wc -l)
-    if [ ${change} -ge 1 ]
-    then
-        echo 1
+    condition=$(echo ${global_projectsToBuild} | grep ${currentFolder}  | wc -l)
+    if [ ${condition} -eq 1 ]; then
+       echo 1
     else
         echo 0
     fi
@@ -82,9 +79,10 @@ GitUtils.doIfChangesDetected()
     changeDetected=$(GitUtils.changeDetected ${currentFolder})
     if [ "$changeDetected" = 1 ]
     then
+        ScreenUtils.echoSuccess "[IN PROGRESS] $f"
         ${action}
     else
-        echo "[IGNORING] $currentFolder already up to date "${changeDetected}
+        ScreenUtils.echoWarning "[IGNORING] $currentFolder already up to date "
     fi
 }
 
