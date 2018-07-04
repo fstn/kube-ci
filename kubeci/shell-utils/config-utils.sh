@@ -13,8 +13,7 @@ ConfigUtils.replaceVariables()
         ScreenUtils.echoError "File content can't be empty"
     fi
     result="$(echo "$fileContent" | sed "s/[{][{]\.Values\.PROJECT_ID[}][}]/$PROJECT_ID/g")"
-    result="$(echo "$result" | sed "s/\$VERSION/$BUILD_INCREMENT/g")"
-    result="$(echo "$result" | sed "s/[{][{]\.Values\.LAST_VERSION[}][}]//$LAST_VERSION/g")"
+    result="$(echo "$result" | sed "s/[{][{]\.Values\.VERSION[}][}]//$BUILD_INCREMENT/g")"
     echo "$result"
 }
 #############################################################################################

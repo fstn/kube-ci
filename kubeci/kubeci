@@ -5,7 +5,7 @@ d=0;
 bs=0;
 bd=0;
 all=0
-ScreenUtils.echoImportant "Version 0.102"
+ScreenUtils.echoImportant "Version 0.103"
 set -x
 for i in "$@"
 do
@@ -20,7 +20,7 @@ case $i in
        echo "PROJECT_ID $BUILD_INCREMENT"
     ;;
     -bi=*|--buildIncrement=*)
-        export BUILD_INCREMENT="${i#*=}"
+       export BUILD_INCREMENT="${i#*=}"
        echo "BUILD_INCREMENT $BUILD_INCREMENT"
     ;;
     -h|--help)
