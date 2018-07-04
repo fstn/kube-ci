@@ -11,7 +11,6 @@ set -e
 #############################################################################################
 build()
 {
-set -x
     all=$2
     ScreenUtils.echoBanner "INITIALIZE"
     gitDiff=$(GitUtils.getChanges $1)
@@ -45,7 +44,6 @@ set -x
         global_projectsToBuild+="${projectToBuild} "
     done
     echo "[INIT] build files -> $1"
-    set +x
 }
 
 build  $(pwd) $1
