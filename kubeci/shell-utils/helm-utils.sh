@@ -12,7 +12,7 @@ HelmUtils.updateHelmRelease()
     releaseName=$1
     chartPath=$2
     namespace=$3
-    helm --tiller-namespace ${namespace} upgrade ${releaseName} ${chartPath} --set=LAST_VERSION=${BUILD_INCREMENT}
+    helm --tiller-namespace ${namespace} upgrade ${releaseName} ${chartPath} --set=VERSION=${BUILD_INCREMENT}
     if [ $? -eq 0 ]; then
         echo "$releaseName updated"
     else
@@ -29,7 +29,7 @@ HelmUtils.installHelmRelease()
     chartPath=$2
     values=$3
     namespace=$4
-    helm install ${chartPath} --tiller-namespace ${namespace} --set fullnameOverride=${releaseName},PROJECT_ID=${PROJECT_ID},LAST_VERSION='latest'    --name ${releaseName}
+    helm install ${chartPath} --tiller-namespace ${namespace} --set fullnameOverride=${releaseName},PROJECT_ID=${PROJECT_ID},VERSION='latest'    --name ${releaseName}
     if [ $? -eq 0 ]; then
         echo "$releaseName installed"
     else
