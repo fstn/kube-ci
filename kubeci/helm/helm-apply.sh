@@ -23,6 +23,7 @@ set -x
         echo "[APPLY] file -> $f"
         export f=${f}
         action(){
+            whereAmI=$(pwd)
             HelmUtils.installOrUpdateHelmRelease $(HelmUtils.extractReleaseName ${f}) $(HelmUtils.extractChartName ${f}) ${f} $(HelmUtils.extractNamespace ${f})
         }
         GitUtils.doIfChangesDetected ${f} action
