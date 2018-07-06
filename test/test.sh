@@ -1,11 +1,11 @@
-#!/usr/bin/env bats
+#!/usr/bin/env bash
 
-@test "addition using bc" {
-  result="$(echo 2+2 | bc)"
-  [ "$result" -eq 4 ]
-}
+#############################################################################################
+##                    UNIT TESTING
+#############################################################################################
 
-@test "addition using dc" {
-  result="$(echo 2 2+p | dc)"
-  [ "$result" -eq 4 ]
-}
+KUBECI_PATH=$(pwd)/kubeci
+bats ${KUBECI_PATH}/../test/shell-utils/config-utils.test.sh
+bats ${KUBECI_PATH}/../test/shell-utils/git-utils.test.sh
+bats ${KUBECI_PATH}/../test/shell-utils/kubernetes-utils.test.sh
+bats ${KUBECI_PATH}/../test/shell-utils/version-utils.test.sh

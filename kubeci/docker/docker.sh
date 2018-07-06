@@ -1,10 +1,13 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-set -e
-. $KUBECI_PATH/shell-utils/screen-utils.sh
-. $KUBECI_PATH/shell-utils/kubernetes-utils.sh
-. $KUBECI_PATH/shell-utils/docker-utils.sh
-. $KUBECI_PATH/shell-utils/git-utils.sh
+#############################################################################################
+##                         DOCKER APPLIER
+#############################################################################################
+
+. ${KUBECI_PATH}/shell-utils/screen-utils.sh
+. ${KUBECI_PATH}/shell-utils/kubernetes-utils.sh
+. ${KUBECI_PATH}/shell-utils/docker-utils.sh
+. ${KUBECI_PATH}/shell-utils/git-utils.sh
 
 #############################################################################################
 ##                                  INIT FROM FILES
@@ -14,7 +17,7 @@ initFiles()
     ScreenUtils.echoBanner "BUILD DOCKER"
     echo "[START] Init files inside -> $1"
     for f in `find $1 -regex '.*/Dockerfile'| sort -n `; do
-        export folder=$(dirname -- $f)
+        export folder=$(dirname -- ${f})
         export dockerWorkingFolder=$(python -c "import os.path; print os.path.relpath(\"$folder\",\"$SOURCE_FOLDER\")")
         ScreenUtils.echoImportant "[BUILD] Docker in: ${folder}"
         ScreenUtils.echoBanner ${dockerWorkingFolder}

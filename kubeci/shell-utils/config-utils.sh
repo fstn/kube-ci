@@ -1,6 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-. $KUBECI_PATH/shell-utils/screen-utils.sh
+#############################################################################################
+##                         UTILS FOR CONFIGURATION
+#############################################################################################
+
+. ${KUBECI_PATH}/shell-utils/screen-utils.sh
+. ${KUBECI_PATH}/shell-utils/file-utils.sh
 
 #############################################################################################
 ##                                REPLACE VARIABLES INTO FILES
@@ -22,12 +27,20 @@ ConfigUtils.replaceVariables()
 ConfigUtils.getValueFromConfig()
 {
     file="$1"
+    if [ -z "file" ]
+    then
+        ScreenUtils.echoError "File can't be empty"
+    fi
     key="$2"
-    somethingToDo=$(FileUtils.verifyFileNoError $file "Nothing to do, to unable the action please add file:")
+    if [ -z "$key" ]
+    then
+        ScreenUtils.echoError "key can't be empty"
+    fi
+    somethingToDo=$(FileUtils.verifyFileNoError ${file} "Nothing to do, to unable the action please add file:")
     if [ "$somethingToDo" = 1 ]
     then
-        buildAndDeployIfChangesInFolder=$(cat "$file" | shyaml get-value $key 2>/dev/null)
+        buildAndDeployIfChangesInFolder=$(cat "$file" | shyaml get-value ${key} 2>/dev/null)
     fi
 
-    echo $buildAndDeployIfChangesInFolder
+    echo ${buildAndDeployIfChangesInFolder}
 }

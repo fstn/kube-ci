@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  namespace: default
+  name: wecom-backend-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wecom-backend-server
+  template:
+    metadata:
+      name: wecom-backend-server-pod
+      labels:
+        app: wecom-backend-server
+    spec:
+      containers:
+      - name: wecom-backend-server
+        image: gcr.io/{{.Values.PROJECT_ID}}/wecom-backend-server:{{.Values.VERSION}}
