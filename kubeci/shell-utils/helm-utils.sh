@@ -16,7 +16,7 @@ HelmUtils.updateHelmRelease()
     releaseName=$1
     chartPath=$2
     namespace=$3
-    helm --tiller-namespace ${namespace} upgrade ${releaseName} ${chartPath} --set=VERSION=${BUILD_INCREMENT},PROJECT_ID=${PROJECT_ID} --reuse-values
+    helm --tiller-namespace ${namespace} upgrade ${releaseName} "${SOURCE_FOLDER}/${chartPath}" --set=VERSION=${BUILD_INCREMENT},PROJECT_ID=${PROJECT_ID} --reuse-values
     if [ $? -eq 0 ]; then
         echo "$releaseName updated"
     else
