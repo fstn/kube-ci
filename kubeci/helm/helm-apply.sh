@@ -17,7 +17,7 @@ applyHelmConfig()
 {
 set -x
     ScreenUtils.echoBanner "APPLY HELM CONFIG"
-    cd ${KUBECI_PATH}
+    cd ${SOURCE_FOLDER}
     echo "[START] Init files inside -> $1"
     for f in `find $1 -regex '.*/[0-9][^/]*.k.helm.yml'| sort -n `; do
         echo "[APPLY] file -> $f"
@@ -28,8 +28,7 @@ set -x
         GitUtils.doIfChangesDetected ${f} action
     done
     echo "[COMPLETED] Init files -> $1"
-    set +x
-}
+ }
 
 applyHelmConfig `old=$(pwd);cd ../;pwd;cd ${old}`
 
