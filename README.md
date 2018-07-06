@@ -12,9 +12,14 @@ chmod +x $YOUR_INSTALLATION_PATH/kubeci
 export KUBECI_PATH=$YOUR_INSTALLATION_PATH
 ```
 
-### How to run
+### How to run ?
 ```
-$YOUR_INSTALLATION_PATH/kube-ci/kube-ci/kubeci -b -p=test -bi=1
+$YOUR_INSTALLATION_PATH/kube-ci/kube-ci/kubeci -bs -p=test -bi=1
+```
+
+### How to build ?
+```
+$YOUR_INSTALLATION_PATH/kube-ci/build.sh
 ```
 
 ## Requirements

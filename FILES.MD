@@ -2,7 +2,7 @@
 Gitlab build script descriptor
 
 # .gitlab-ci.config.yml
-Contain build configuration for every sub folder
+Contains build configuration for every sub folder
 buildAndDeployIfChangesInFolder: folder to scan for changes, if there is changes it run the build
 
 # [0-9]*.k.sh

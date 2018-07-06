@@ -2,6 +2,8 @@
 
 #############################################################################################
 ##                         INIT APPLIER
+## Will mark all project to rebuild based on gitDiff result
+## It can be skip if the all variable is set
 #############################################################################################
 
 . ${KUBECI_PATH}/shell-utils/screen-utils.sh

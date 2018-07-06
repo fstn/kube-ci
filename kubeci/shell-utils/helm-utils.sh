@@ -33,7 +33,7 @@ HelmUtils.installHelmRelease()
     chartPath=$2
     values=$3
     namespace=$4
-    helm install ${chartPath} --tiller-namespace ${namespace} --set fullnameOverride=${releaseName},PROJECT_ID=${PROJECT_ID},VERSION='latest'    --name ${releaseName}
+    helm install ${chartPath} --tiller-namespace ${namespace} --set fullnameOverride=${releaseName},PROJECT_ID=${PROJECT_ID},VERSION='latest'   pm --name ${releaseName}
     if [ $? -eq 0 ]; then
         echo "$releaseName installed"
     else
