@@ -31,7 +31,7 @@ initFiles()
             podName=$(KubernetesUtils.extractPodName ${deploymentFile})
             DockerUtils.buildDocker ${imageName} ${BUILD_INCREMENT} ${dockerWorkingFolder}
             DockerUtils.pushDocker ${imageName} ${BUILD_INCREMENT}
-            DockerUtils.deployDocker ${imageName} ${BUILD_INCREMENT} ${deploymentName} ${podName}
+            #DockerUtils.deployDocker ${imageName} ${BUILD_INCREMENT} ${deploymentName} ${podName}
         }
         GitUtils.doIfChangesDetected ${f} action
 
