@@ -46,6 +46,8 @@ delete-staging-all:
   when: manual
 ```
 
+Add a .gitlab-ci.config.yml file in you subfolder (see files description for more information)
+
 ### How to run ?
 ```
 $YOUR_INSTALLATION_PATH/kube-ci/kube-ci/kubeci -bs -p=test -bi=1
