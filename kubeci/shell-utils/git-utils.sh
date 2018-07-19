@@ -46,7 +46,7 @@ GitUtils.getBranchName()
     then
         ScreenUtils.echoError "currentFolder parameter can't be null"
     fi
-    gitDiff=$(cd  ${currentFolder} && git rev-parse --abbrev-ref HEAD)
+    gitDiff=$(cd  ${currentFolder} && git branch | grep \* | awk ' { print $2 }')
     echo ${gitDiff}
 }
 
