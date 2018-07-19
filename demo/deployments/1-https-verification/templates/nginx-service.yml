@@ -1,0 +1,13 @@
+{{- $fullName := include "1-https-verification.fullname" . -}}
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: {{.Values.NAMESPACE}}
+  name:  {{ $fullName }}
+spec:
+  type: LoadBalancer
+  selector:
+    app: {{ $fullName }}
+  ports:
+  - protocol: TCP
+    port: 80

@@ -1,0 +1,7 @@
+helm:
+  releaseName: externals-https-validation
+  chart: ./deployments/1-https-verification
+  namespace: gitlab-managed-apps
+ssl:
+  verificationKey: 1221221221
+

@@ -1,0 +1,4 @@
+buildAndDeployIfChangesInFolder: \(sources/fake-sources/.*\)\|\(deployments/0-web-server/.*\)
+deploymentFile: templates/deployment.yml
+
+

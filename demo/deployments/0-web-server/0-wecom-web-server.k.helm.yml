@@ -1,0 +1,4 @@
+helm:
+  releaseName: web-server
+  chart: ./deployments/0-web-server
+  namespace: gitlab-managed-apps

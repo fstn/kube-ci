@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: {{.Values.NAMESPACE}}
+  name: web-server-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: web-server
+  ports:
+  - protocol: TCP
+    port: 80

@@ -1,0 +1,25 @@
+{{- $fullName := include "1-https-verification.fullname" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{.Values.NAMESPACE}}
+  name: {{ $fullName }}
+data:
+  nginx.conf: |
+    events {
+    }
+    http {
+      server {
+        listen 80 default_server;
+        server_name _;
+
+        location / {
+            return 200 'healthy';
+        }
+
+        location /.well-known/pki-validation/fileauth.txt {
+          return 200 '{{ .Values.ssl.verificationKey }}';
+        }
+
+      }
+    }

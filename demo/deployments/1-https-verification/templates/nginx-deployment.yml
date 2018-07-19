@@ -1,0 +1,31 @@
+{{- $fullName := include "1-https-verification.fullname" . -}}
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  namespace: {{.Values.NAMESPACE}}
+  name: {{ $fullName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ $fullName }}
+  template:
+    metadata:
+      name: {{ $fullName }}
+      labels:
+        app: {{ $fullName }}
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          volumeMounts:
+            - name: {{ $fullName }}
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: {{ $fullName }}
+              mountPath: /etc/nginx/other.conf
+              subPath: other.conf
+      volumes:
+        - name: {{ $fullName }}
+          configMap:
+            name: {{ $fullName }}
