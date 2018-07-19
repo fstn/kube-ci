@@ -20,3 +20,12 @@
     [ ${result} -eq 0 ]
 }
 
+
+@test "GitUtils.getBranchName should return a name" {
+    PROJECT_ID="PROJECT_ID"
+    BUILD_INCREMENT=1
+    global_projectsToBuild="currentFolder2 currentFolder1 currentFolder"
+    result=$(GitUtils.getBranchName ${KUBECI_PATH})
+    echo ${result}
+    [ ${result} =  "master" ]
+}

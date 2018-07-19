@@ -37,6 +37,20 @@ GitUtils.getChanges()
 }
 
 #############################################################################################
+##                          GET branch name
+#############################################################################################
+GitUtils.getBranchName()
+{
+    currentFolder="$1"
+    if [ -z ${currentFolder} ]
+    then
+        ScreenUtils.echoError "currentFolder parameter can't be null"
+    fi
+    gitDiff=$(cd  ${currentFolder} && git rev-parse --abbrev-ref HEAD)
+    echo ${gitDiff}
+}
+
+#############################################################################################
 ##                          CHANGE DETECTED
 #############################################################################################
 GitUtils.changeDetected()

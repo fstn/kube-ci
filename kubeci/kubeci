@@ -112,9 +112,14 @@ fi
 if [ ${d} -eq 1 ]
 then
     verifySourceParameter
-    echo "DEPLOY"
-    cd ${SOURCE_FOLDER}
-    . ${KUBECI_PATH}/helm/helm-apply.sh
-    . ${KUBECI_PATH}/kubernetes/kubectl-apply.sh
+    if [ -z ${DNS} ]
+    then
+        echo "DNS Name is empty for current branch, please verify your .deployments.gitlab-ci.yml file"
+    else
+        echo "DEPLOY"
+        cd ${SOURCE_FOLDER}
+        . ${KUBECI_PATH}/helm/helm-apply.sh
+        . ${KUBECI_PATH}/kubernetes/kubectl-apply.sh
+    fi
 fi
 

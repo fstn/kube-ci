@@ -25,6 +25,8 @@ build()
     done
     echo "[INIT] read config files inside -> $1"
     export gitDiff=$(GitUtils.getChanges $1)
+    export gitBranch=$(GitUtils.getBranchName $1)
+    export DNS=$(ConfigUtils.getValueFromConfig ${f} ${gitBranch})
     for f in `find $1 -regex ".*/.gitlab-ci.config.yml"| sort -n `; do
         echo "[APPLY] file -> $f"
         export f=${f}
