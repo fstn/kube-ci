@@ -27,6 +27,7 @@ build()
     export gitDiff=$(GitUtils.getChanges $1)
     export gitBranch=$(GitUtils.getBranchName $1)
     export DNS=$(ConfigUtils.getValueFromDeployment "${f}/.deployments.gitlab-ci.yml" ${gitBranch})
+    ScreenUtils.echoBanner "DNS ${DNS}"
     for f in `find $1 -regex ".*/.gitlab-ci.config.yml"| sort -n `; do
         echo "[APPLY] file -> $f"
         export f=${f}
