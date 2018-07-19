@@ -19,6 +19,7 @@ ConfigUtils.replaceVariables()
     fi
     result="$(echo "$fileContent" | sed "s/[{][{]\.Values\.PROJECT_ID[}][}]/$PROJECT_ID/g")"
     result="$(echo "$result" | sed "s/[{][{]\.Values\.VERSION[}][}]/$BUILD_INCREMENT/g")"
+    result="$(echo "$result" | sed "s/[{][{]\.Values\.DNS[}][}]/$DNS/g")"
     echo "$result"
 }
 #############################################################################################
