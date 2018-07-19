@@ -1,5 +1,6 @@
 # kube-ci
 ci bridge between kubernetes and Gitlab.
+Build and deploy a easy CI with gitLab and Kubernetes
 
 - Detect changes in subfolder
 - Build sources
@@ -7,7 +8,6 @@ ci bridge between kubernetes and Gitlab.
 - Deploy with Helm
 
 See demo folder
-
 
 ## How to use it
 
