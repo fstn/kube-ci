@@ -26,11 +26,18 @@ build()
     echo "[INIT] read config files inside -> $1"
     export gitDiff=$(GitUtils.getChanges $1)
     echo "[INIT] read deployment config files inside -> .deployments.gitlab-ci.yml for branch ${CI_COMMIT_REF_NAME}"
+
     export DNS=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.dns")
+    echo "Reading DNS: ${DNS}"
+
     export NAMESPACE=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.namespace")
-    kubectl create namespace ${NAMESPACE}
-    echo "DNS ${DNS}"
-    echo "NAMESPACE ${NAMESPACE}"
+    namespaceExists=$(kubectl get namespace | grep -e "^staging "| wc -l)
+    if [ ${namespaceExists} -eq 0 ]
+    then
+        kubectl create namespace ${NAMESPACE}
+    fi
+    echo "Reading NAMESPACE: ${NAMESPACE}"
+
     for f in `find $1 -regex ".*/.gitlab-ci.config.yml"| sort -n `; do
         echo "[APPLY] file -> $f"
         export f=${f}
