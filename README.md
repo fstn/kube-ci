@@ -1,5 +1,10 @@
 # kube-ci
-ci bridge between kubernetes and Gitlab
+ci bridge between kubernetes and Gitlab.
+
+- Detect changes in subfolder
+- Build sources
+- Build docker
+- Deploy with Helm
 
 See demo folder
 
