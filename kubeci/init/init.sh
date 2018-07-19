@@ -31,7 +31,7 @@ build()
     echo "Reading DNS: ${DNS}"
 
     export NAMESPACE=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.namespace")
-    namespaceExists=$(kubectl get namespace | grep -e "^staging "| wc -l)
+    namespaceExists=$(kubectl get namespace | grep -e "^${NAMESPACE} "| wc -l)
     if [ ${namespaceExists} -eq 0 ]
     then
         kubectl create namespace ${NAMESPACE}
