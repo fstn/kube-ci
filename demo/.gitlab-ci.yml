@@ -1,0 +1,61 @@
+image: gcr.io/<PROJECT_ID>/build-essential:latest
+
+variables:
+  DOCKER_DRIVER: overlay
+
+services:
+  - docker:dind
+
+
+before_script:
+  - set -e
+  - gcloud auth activate-service-account --key-file gitlab-useraccount.json
+  - gcloud auth configure-docker
+  - wget https://github.com/fstn/kube-ci/raw/master/kubeci.tar --no-cache
+  - tar xvf kubeci.tar
+  - mv ./kubeci /
+  - chmod +x /kubeci/kubeci
+  - export KUBECI_PATH=/kubeci
+  - export NODE_ENV="development"
+
+build-sources:
+  stage: build
+  script:
+  - wget https://github.com/fstn/kube-ci/raw/master/kubeci.tar
+  - tar xvf kubeci.tar
+  - rm -rf /kubeci
+  - mv ./kubeci /
+  - chmod +x /kubeci/kubeci
+  - export KUBECI_PATH=/kubeci
+  - bash /kubeci/kubeci -bs -bd -d -p=<PROJECT_ID>-bi=$CI_PIPELINE_ID -s=$(pwd)
+
+build-all:
+  stage: build
+  script:
+   - bash /kubeci/kubeci -bs -bd -d -a -p=<PROJECT_ID> -bi=$CI_PIPELINE_ID -s=$(pwd)
+  when: manual
+
+deploy-all:
+  stage: build
+  script:
+   - bash /kubeci/kubeci -d -a -p=<PROJECT_ID> -bi=latest -s=$(pwd)
+  when: manual
+
+delete-staging-all:
+  stage: test
+  script:
+   - kubectl delete services,statefulsets,deployments,po --all --namespace=staging
+  when: manual
+
+delete-test-all:
+  stage: test
+  script:
+   - kubectl delete services,statefulsets,deployments,po --all --namespace=test
+  when: manual
+
+delete-prod-all:
+  stage: test
+  script:
+   - kubectl delete services,statefulsets,deployments,po --all --namespace=prod
+  when: manual
+

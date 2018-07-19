@@ -1,6 +1,9 @@
 # kube-ci
 ci bridge between kubernetes and Gitlab
 
+See demo folder
+
+
 ## How to use it
 
 In your gitlab-ci.yml file:
