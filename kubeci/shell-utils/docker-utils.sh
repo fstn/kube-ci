@@ -88,5 +88,5 @@ DockerUtils.deployDocker()
     fi
     ScreenUtils.separateLine
     echo "[DEPLOY] Docker -> $imageName"
-    echo "kubectl set image deployments/$deploymentName $podName=$imageName:$buildCounter  --namespace=default"
+    echo "kubectl set image deployments/$deploymentName $podName=$imageName:$buildCounter  --namespace=${NAMESPACE}"
 }

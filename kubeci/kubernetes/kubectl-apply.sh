@@ -35,7 +35,7 @@ applyKubernetesConfig()
         export f=${f}
         action(){
             tryToFillLastVersion ${f}
-            getFileContentFromTemplate  ${f} | kubectl apply --namespace=default -f -
+            getFileContentFromTemplate  ${f} | kubectl apply --namespace=${NAMESPACE} -f -
         }
         GitUtils.doIfChangesDetected ${f} action
     done
