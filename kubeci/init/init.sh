@@ -25,8 +25,8 @@ build()
     done
     echo "[INIT] read config files inside -> $1"
     export gitDiff=$(GitUtils.getChanges $1)
-    echo "[INIT] read deployment config files inside -> ${f}/.deployments.gitlab-ci.yml for branch ${CI_COMMIT_REF_NAME}"
-    export DNS=$(ConfigUtils.getValueFromConfig "${f}/.deployments.gitlab-ci.yml" ${CI_COMMIT_REF_NAME})
+    echo "[INIT] read deployment config files inside -> .deployments.gitlab-ci.yml for branch ${CI_COMMIT_REF_NAME}"
+    export DNS=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" ${CI_COMMIT_REF_NAME})
     ScreenUtils.echoBanner "DNS ${DNS}"
     for f in `find $1 -regex ".*/.gitlab-ci.config.yml"| sort -n `; do
         echo "[APPLY] file -> $f"
