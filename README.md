@@ -53,6 +53,8 @@ Add a .gitlab-ci.config.yml file in you subfolder (see files description for mor
 $YOUR_INSTALLATION_PATH/kube-ci/kube-ci/kubeci -bs -p=test -bi=1
 ```
 
+bi represent the image tag number, each image will be also push using namespace as tag
+
 ### How to build ?
 ```
 $YOUR_INSTALLATION_PATH/kube-ci/build.sh
@@ -80,3 +82,4 @@ $YOUR_INSTALLATION_PATH/kube-ci/build.sh
 
 ## GitLab Requirements
 [GitLab requirements](GITLAB.MD)
+

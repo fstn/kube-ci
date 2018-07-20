@@ -36,7 +36,7 @@ DockerUtils.buildDocker()
     echo "[BUILD] Docker version-> $buildCounter"
 
     docker build -t ${imageName}:${buildCounter} -f ${SOURCE_FOLDER}/${folder}/Dockerfile --build-arg folder=${folder} --build-arg NAMESPACE=${NAMESPACE}  ${SOURCE_FOLDER}
-    docker tag ${imageName}:${buildCounter} ${imageName}:latest
+    docker tag ${imageName}:${buildCounter} ${imageName}:${NAMESPACE}
 }
 #############################################################################################
 ##                                  PUSH DOCKER
@@ -57,7 +57,7 @@ DockerUtils.pushDocker()
 
     ScreenUtils.separateLine
     echo "[PUSH] Docker -> $imageName"
-    docker push ${imageName}:'latest'
+    docker push ${imageName}:${NAMESPACE}
     docker push ${imageName}:${buildCounter}
 }
 
