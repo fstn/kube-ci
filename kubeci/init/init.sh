@@ -30,13 +30,19 @@ build()
     export DNS=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.dns")
     echo "Reading DNS: ${DNS}"
 
-    export NAMESPACE=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.namespace")
-    namespaceExists=$(kubectl get namespace | grep -e "^${NAMESPACE} "| wc -l)
-    if [ ${namespaceExists} -eq 0 ]
+
+    if [ -z  ${NAMESPACE} ]
     then
-        kubectl create namespace ${NAMESPACE}
+        export NAMESPACE=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.namespace")
+        namespaceExists=$(kubectl get namespace | grep -e "^${NAMESPACE} "| wc -l)
+        if [ ${namespaceExists} -eq 0 ]
+        then
+            kubectl create namespace ${NAMESPACE}
+        fi
+        echo "Reading NAMESPACE: ${NAMESPACE}"
+     else
+        echo "Existing NAMESPACE: ${NAMESPACE}"
     fi
-    echo "Reading NAMESPACE: ${NAMESPACE}"
 
     for f in `find $1 -regex ".*/.gitlab-ci.config.yml"| sort -n `; do
         echo "[APPLY] file -> $f"
