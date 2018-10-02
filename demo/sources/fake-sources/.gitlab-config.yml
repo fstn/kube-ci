@@ -1,9 +1,0 @@
-buildAndDeployIfChangesInFolder: \(/demo/sources/fake-sources\)
-listOfDependencies: /demo/sources/fake-sources-dependencies
-before_script:
-  - set -e
-
-build-sources:
-  script:
-   - npm install
-   - npm run-script build

@@ -1,0 +1,8 @@
+buildAndDeployIfChangesInFolder: \(sources/1-fake-sources/.*\)
+listOfDependencies: sources/0-fake-dependencies
+before_script:
+  - set -e
+build-sources:
+  script:
+   - npm install
+   - npm run-script build

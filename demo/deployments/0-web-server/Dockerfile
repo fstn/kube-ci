@@ -8,4 +8,4 @@ COPY $folder/../ /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
 
 ## Copy the dist result
-COPY $folder/../../sources/build /usr/share/nginx/html
+COPY $folder/../../sources /usr/share/nginx/html

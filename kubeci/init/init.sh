@@ -54,13 +54,33 @@ build()
         if [ ${change} -ge 1 ] || [ ${all} -eq 1 ]
         then
              listOfDependencies=$(ConfigUtils.getValueFromConfig ${f} "listOfDependencies")
+             if [ -z ${listOfDependencies} ]
+             then
+                ScreenUtils.echoWarning  "[INIT] No dependency for $(dirname ${f})"
+             fi
              for dependency in ${listOfDependencies}
              do
-                ScreenUtils.echoSuccess  "[INIT] Add dependency $(dependency) for $(dirname ${f}) to the build queue "
-                projectsToBuild+=($(dependency))
+                dependencyFolder="$(pwd)/${dependency}"
+                if [ ! -d ${dependencyFolder} ];
+                then
+                    ScreenUtils.echoError  "[INIT] Dependency ${dependencyFolder} is not a directory "
+                fi
+                if [[ ! " ${projectsToBuild[@]} " =~ " ${dependencyFolder} " ]];
+                then
+                    ScreenUtils.echoSuccess  "[INIT] Add dependency ${dependencyFolder} for $(dirname ${f}) to the build queue"
+                    projectsToBuild+=(${dependencyFolder})
+                else
+                    ScreenUtils.echoWarning  "[INIT] Dependency ${dependencyFolder} already added to the build queue "
+                fi
              done
-             ScreenUtils.echoSuccess  "[INIT] Add $f to the build queue "
-             projectsToBuild+=($(dirname ${f}))
+
+             if [[ ! " ${projectsToBuild[@]} " =~ " $(dirname ${f}) " ]];
+             then
+                ScreenUtils.echoSuccess  "[INIT] Add ${f} to the build queue"
+                projectsToBuild+=($(dirname ${f}))
+             else
+                ScreenUtils.echoWarning  "[INIT] ${f} already added to the build queue "
+             fi
         else
             ScreenUtils.echoWarning "[INIT] Ignoring $f already up to date "
         fi

@@ -1,4 +1,4 @@
-buildAndDeployIfChangesInFolder: \(/demo/sources/fake-sources-dependencies\)
+buildAndDeployIfChangesInFolder: \(sources/0-fake-dependencies/.*\)
 before_script:
   - set -e
 
