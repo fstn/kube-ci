@@ -53,6 +53,12 @@ build()
         change=$(echo ${gitDiff} | grep "$buildAndDeployIfChangesInFolder" | wc -l)
         if [ ${change} -ge 1 ] || [ ${all} -eq 1 ]
         then
+             listOfDependencies=$(ConfigUtils.getValueFromConfig ${f} "listOfDependencies")
+             for dependency in ${listOfDependencies}
+             do
+                ScreenUtils.echoSuccess  "[INIT] Add dependency $(dependency) for $(dirname ${f}) to the build queue "
+                projectsToBuild+=($(dependency))
+             done
              ScreenUtils.echoSuccess  "[INIT] Add $f to the build queue "
              projectsToBuild+=($(dirname ${f}))
         else

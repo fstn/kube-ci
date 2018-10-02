@@ -83,3 +83,9 @@ $YOUR_INSTALLATION_PATH/kube-ci/build.sh
 ## GitLab Requirements
 [GitLab requirements](GITLAB.MD)
 
+## Run Demo
+
+export CI_COMMIT_REF_NAME=master
+export KUBECI_PATH=../kubeci
+cd demo
+ bash ../kubeci/kubeci -bs -bd -d -p=test -bi=1 -s=$(pwd)
