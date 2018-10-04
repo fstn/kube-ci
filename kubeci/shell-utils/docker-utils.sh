@@ -34,6 +34,7 @@ DockerUtils.buildDocker()
     echo "[BUILD] Docker folder -> $folder"
     echo "[BUILD] Docker home-> $SOURCE_FOLDER"
     echo "[BUILD] Docker version-> $buildCounter"
+    echo "[BUILD] Docker dns -> ${DNS}"
 
     docker build -t ${imageName}:${buildCounter} -f ${SOURCE_FOLDER}/${folder}/Dockerfile --build-arg folder=${folder} --build-arg DNS=${DNS} --build-arg NAMESPACE=${NAMESPACE}  ${SOURCE_FOLDER}
     docker tag ${imageName}:${buildCounter} ${imageName}:${NAMESPACE}
