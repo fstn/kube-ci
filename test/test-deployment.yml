@@ -17,3 +17,10 @@ spec:
       containers:
       - name: wecom-backend-server
         image: gcr.io/{{.Values.PROJECT_ID}}/wecom-backend-server:{{.Values.VERSION}}
+        env:
+        - name: DEBUG
+          value: "true"
+        - name: DNS
+          value: {{.Values.DNS}}
+        - name: LOG_LEVEL
+          value: {{.Values.LOG_LEVEL}}

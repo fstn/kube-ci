@@ -20,6 +20,8 @@ ConfigUtils.replaceVariables()
     result="$(echo "$fileContent" | sed "s/[{][{]\.Values\.PROJECT_ID[}][}]/$PROJECT_ID/g")"
     result="$(echo "$result" | sed "s/[{][{]\.Values\.VERSION[}][}]/$BUILD_INCREMENT/g")"
     result="$(echo "$result" | sed "s/[{][{]\.Values\.DNS[}][}]/$DNS/g")"
+    result="$(echo "$result" | sed "s/[{][{]\.Values\.LOG_LEVEL[}][}]/$DNS/g")"
+    result="$(echo "$result" | sed "s/[{][{]\.Values\.DEBUG[}][}]/$DNS/g")"
     result="$(echo "$result" | sed "s/[{][{]\.Values\.NAMESPACE[}][}]/$NAMESPACE/g")"
     echo "$result"
 }

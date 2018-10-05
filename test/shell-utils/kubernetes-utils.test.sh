@@ -10,6 +10,8 @@ deploymentFile="${KUBECI_PATH}/../test/test-deployment.yml"
 #############################################################################################
 @test "getFileContentFromTemplate should return file content and replace variables" {
     PROJECT_ID="PROJECT_ID"
+    LOG_LEVEL="info"
+    DEBUG=true
     BUILD_INCREMENT=1
     result=$(getFileContentFromTemplate ${deploymentFile})
     echo "result: "${result}
@@ -21,6 +23,8 @@ deploymentFile="${KUBECI_PATH}/../test/test-deployment.yml"
 #############################################################################################
 @test "KubernetesUtils.extractImageName should return imageName and replace variables" {
     PROJECT_ID="PROJECT_ID"
+    LOG_LEVEL="info"
+    DEBUG=true
     BUILD_INCREMENT=1
     result=$(KubernetesUtils.extractImageName ${deploymentFile})
     echo "result: "${result}
@@ -32,6 +36,8 @@ deploymentFile="${KUBECI_PATH}/../test/test-deployment.yml"
 #############################################################################################
 @test "KubernetesUtils.extractDeploymentName should return deploymentName and replace variables" {
     PROJECT_ID="PROJECT_ID"
+    LOG_LEVEL="info"
+    DEBUG=true
     BUILD_INCREMENT=1
     result=$(KubernetesUtils.extractDeploymentName ${deploymentFile})
     echo "result: "${result}
@@ -43,6 +49,8 @@ deploymentFile="${KUBECI_PATH}/../test/test-deployment.yml"
 #############################################################################################
 @test "KubernetesUtils.extractPodName should return pod name and replace variables" {
     PROJECT_ID="PROJECT_ID"
+    LOG_LEVEL="info"
+    DEBUG=true
     BUILD_INCREMENT=1
     result=$(KubernetesUtils.extractPodName ${deploymentFile})
     echo "result: "${result}
