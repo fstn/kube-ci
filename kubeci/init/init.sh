@@ -31,15 +31,16 @@ build()
     echo "[INIT] all environment variables before exporting all .deployments.gitlab-ci.yml:"
     env
     ConfigUtils.exportAllVariablesFrom ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}"
-    resultFile=$(FunctionUtils.getResultFile "ConfigUtils.exportAllVariablesFrom")
     echo "[INIT] environment variables found inside .deployments.gitlab-ci.yml:"
-    cat "${resultFile}"
+    result=$(FunctionUtils.getResult "ConfigUtils.exportAllVariablesFrom")
+    while read line
+    do
+        export $(echo "${line}")
+    done <<< "$(echo -e "$result")"
+
     echo "[INIT] all environment variables after exporting all .deployments.gitlab-ci.yml:"
-    source "${resultFile}"
-    set -a
-    . "${resultFile}"
-    set +a
     env
+    return 0
     export DEBUG=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.debug")
     export LOG_LEVEL=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.logLevel")
     export CONFIG=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.CONFIG")
