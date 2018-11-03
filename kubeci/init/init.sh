@@ -40,6 +40,7 @@ build()
 
     ScreenUtils.echoImportant "[INIT] all environment variables after exporting all .deployments.gitlab-ci.yml:"
     env
+    export DNS=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.dns")
     export DEBUG=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.debug")
     export LOG_LEVEL=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.logLevel")
     export CONFIG=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.CONFIG")
