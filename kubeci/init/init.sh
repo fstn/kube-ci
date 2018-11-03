@@ -38,9 +38,8 @@ build()
         export $(echo "${line}")
     done <<< "$(echo -e "$result")"
 
-    echo "[INIT] all environment variables after exporting all .deployments.gitlab-ci.yml:"
+    ScreenUtils.echoImportant "[INIT] all environment variables after exporting all .deployments.gitlab-ci.yml:"
     env
-    return 0
     export DEBUG=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.debug")
     export LOG_LEVEL=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.logLevel")
     export CONFIG=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.CONFIG")
