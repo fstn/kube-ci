@@ -33,7 +33,9 @@ build()
     cat "${resultFile}"
     echo "[INIT] all environment variables:"
     source "${resultFile}"
-    export $(cut -d= -f1 "${resultFile}")
+    set -a
+    . "${resultFile}"
+    set +a
     env
     export DEBUG=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.debug")
     export LOG_LEVEL=$(ConfigUtils.getValueFromConfig ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}.logLevel")
