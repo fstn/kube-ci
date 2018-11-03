@@ -26,6 +26,7 @@ build()
     done
     echo "[INIT] read config files inside -> $1"
     export gitDiff=$(GitUtils.getChanges $1)
+    set -x
     echo "[INIT] read deployment config files inside -> .deployments.gitlab-ci.yml for branch ${CI_COMMIT_REF_NAME}"
     ConfigUtils.exportAllVariablesFrom ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}"
     . $(FunctionUtils.getResultFile "ConfigUtils.exportAllVariablesFrom")
