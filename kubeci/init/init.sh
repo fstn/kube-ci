@@ -27,11 +27,14 @@ build()
     echo "[INIT] read config files inside -> $1"
     export gitDiff=$(GitUtils.getChanges $1)
     echo "[INIT] read deployment config files inside -> .deployments.gitlab-ci.yml for branch ${CI_COMMIT_REF_NAME}"
+
+    echo "[INIT] all environment variables before exporting all .deployments.gitlab-ci.yml:"
+    env
     ConfigUtils.exportAllVariablesFrom ".deployments.gitlab-ci.yml" "${CI_COMMIT_REF_NAME}"
     resultFile=$(FunctionUtils.getResultFile "ConfigUtils.exportAllVariablesFrom")
-    echo "[INIT] new environment variables:"
+    echo "[INIT] environment variables found inside .deployments.gitlab-ci.yml:"
     cat "${resultFile}"
-    echo "[INIT] all environment variables:"
+    echo "[INIT] all environment variables after exporting all .deployments.gitlab-ci.yml:"
     source "${resultFile}"
     set -a
     . "${resultFile}"
