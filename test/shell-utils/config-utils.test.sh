@@ -1,6 +1,7 @@
 #!/usr/bin/env bats
 
 . ${KUBECI_PATH}/shell-utils/config-utils.sh
+. ${KUBECI_PATH}/shell-utils/function-utils.sh
 
 @test "ConfigUtils.replaceVariables should replace variables" {
     PROJECT_ID="PROJECT_ID"
@@ -40,4 +41,32 @@
     rm -f test.yml
     echo ${result}
     [ "${result}" = "" ]
+}
+
+@test "ConfigUtils.exportAllVariablesFrom should return error values" {
+    PROJECT_ID="PROJECT_ID"
+    LOG_LEVEL="info"
+    DEBUG=true
+    BUILD_INCREMENT=1
+    echo "test:" >> test.yml
+    echo " test1:1 " >> test.yml
+    echo " test2: 2 " >> test.yml
+    $(ConfigUtils.exportAllVariablesFrom "test.yml" "test")
+    error=$(FunctionUtils.getError "ConfigUtils.exportAllVariablesFrom")
+    rm -f test.yml
+    [ ! -z "${error}" ]
+}
+
+@test "ConfigUtils.exportAllVariablesFrom should export  values" {
+    PROJECT_ID="PROJECT_ID"
+    LOG_LEVEL="info"
+    DEBUG=true
+    BUILD_INCREMENT=1
+    echo "test:" >> test.yml
+    echo " test1: 1 " >> test.yml
+    echo " test2: 2 " >> test.yml
+    $(ConfigUtils.exportAllVariablesFrom "test.yml" "test")
+    . $(FunctionUtils.getResultFile "ConfigUtils.exportAllVariablesFrom")
+    rm -f test.yml
+    [ "${test1}" = 1 ]
 }
