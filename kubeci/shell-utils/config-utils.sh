@@ -33,7 +33,6 @@ ConfigUtils.replaceVariables()
 ConfigUtils.getValueFromConfig()
 {
     fun="ConfigUtils.getValueFromConfig"
-    rm .getValueFromConfig.error 2>/dev/null
     file="$1"
     if [ -z "file" ]
     then
@@ -71,8 +70,6 @@ ConfigUtils.exportAllVariablesFrom()
         ScreenUtils.echoError "key can't be empty"
     fi
     FunctionUtils.begin $fun
-    rm .exportAllVariablesFrom.result 2>/dev/null
-    rm .exportAllVariablesFrom.error 2>/dev/null
     toExport=""
     configs=$(ConfigUtils.getValueFromConfig "${file}" "${key}")
     error=$(FunctionUtils.getError "ConfigUtils.getValueFromConfig")

@@ -17,8 +17,8 @@ FunctionUtils.begin()
     then
         ScreenUtils.echoError "Function name can't be empty"
     fi
-    rm $(FunctionUtils.getResultFile "${functionName}") 2>/dev/null
-    rm $(FunctionUtils.getErrorFile "${functionName}") 2>/dev/null
+    rm $(FunctionUtils.getResultFile "${functionName}")
+    rm $(FunctionUtils.getErrorFile "${functionName}")
     return 0
 }
 
